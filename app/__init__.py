@@ -5,7 +5,7 @@ Web scrapping functions
 
 """
 from flask import Flask, jsonify, abort
-from lxml import html
+from app.models import PEP
 import requests
 
 
@@ -25,11 +25,8 @@ def get_pep(pep_number):
     if response.status_code != 200:
         return jsonify(dict(errors=['Something wrong'])), 400
 
-    root = html.fromstring(response.text)
-    nodes = root.xpath('//div[@id="content"]')
-    if nodes:
-        node = nodes[0]
-        pieces = [piece for piece in node.itertext()]
-        return jsonify(dict(data=''.join(pieces)))
+    pep = PEP(response.text)
+    if pep.text:
+        return jsonify(dict(data=pep.text))
     else:
         return abort(404)

@@ -1,7 +1,7 @@
 import unittest
 
 
-class PEPTest(unittest.TestCase):
+class AppTest(unittest.TestCase):
     def setUp(self):
         self.test = 'Hello'
 

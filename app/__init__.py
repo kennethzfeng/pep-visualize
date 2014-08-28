@@ -23,7 +23,8 @@ def get_pep(pep_number):
         text = f.read().decode('utf-8')
     pep = PEP(text)
     pep.parse_metadata()
-    if pep.title:
-        return jsonify(dict(data=pep.title))
+    pep_dict = pep.to_dict()
+    if pep_dict:
+        return jsonify(dict(data=pep_dict))
     else:
         return abort(404)

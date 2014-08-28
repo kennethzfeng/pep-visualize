@@ -38,3 +38,12 @@ class PEP(object):
 
         if 'Status' in self.metadata_dict:
             self.status = self.metadata_dict['Status']
+
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'number': self.number,
+            'authors': self.authors,
+            'type': self.type,
+            'status': self.status
+        }

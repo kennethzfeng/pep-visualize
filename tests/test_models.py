@@ -41,6 +41,11 @@ class PEPTest(unittest.TestCase):
         self.pep.parse_metadata()
         self.assertEqual('Active', self.pep.status)
 
+    def test_pep_to_dict(self):
+        self.pep.parse_metadata()
+        pep_dict = self.pep.to_dict()
+        self.assertIsInstance(pep_dict, dict)
+
 
 if __name__ == '__main__':
     unittest.main()

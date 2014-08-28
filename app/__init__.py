@@ -19,14 +19,11 @@ def get_pep(pep_number):
     """
     if not pep_number:
         return jsonify(dict(errors=['PEP Number is missing'])), 400
-    url = 'http://www.python.org/dev/peps/pep-%04d' % pep_number
-    response = requests.get(url)
-
-    if response.status_code != 200:
-        return jsonify(dict(errors=['Something wrong'])), 400
-
-    pep = PEP(response.text)
-    if pep.text:
-        return jsonify(dict(data=pep.text))
+    with open('pep_documents/pep-%04d.txt' % pep_number, 'rb') as f:
+        text = f.read().decode('utf-8')
+    pep = PEP(text)
+    pep.parse_metadata()
+    if pep.title:
+        return jsonify(dict(data=pep.title))
     else:
         return abort(404)

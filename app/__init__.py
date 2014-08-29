@@ -4,12 +4,17 @@ PEP Visualize
 Web scrapping functions
 
 """
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, make_response
 from app.models import PEP
 import requests
 
 
 app = Flask(__name__)
+
+
+@app.errorhandler(404)
+def error(e):
+    return jsonify({'errors': ('Resource Not Found', )}), 404
 
 
 @app.route('/pep/<int:pep_number>')

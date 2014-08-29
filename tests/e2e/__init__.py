@@ -25,6 +25,11 @@ class APITest(unittest.TestCase):
             pep_dict = pep.to_dict()
         self.assertDictEqual(json_obj['data'], pep_dict)
 
+    def test_error(self):
+        response = self.app.get('/pep/-1')
+        self.assertEqual(404, response.status_code)
+        self.assertEqual('application/json', response.headers['Content-Type'])
+
 
 if __name__ == '__main__':
     unittest.main()

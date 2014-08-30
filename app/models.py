@@ -3,6 +3,7 @@
 
 class PEP(object):
     LINE_READ_COUNT = 20
+
     def __init__(self, pep_text):
         self.pep_text = pep_text
 
@@ -38,6 +39,8 @@ class PEP(object):
 
         if 'Status' in self.metadata_dict:
             self.status = self.metadata_dict['Status']
+
+        self.pep_content = '\n\n\n'.join(self.pep_text.split('\n\n\n')[1:])
 
     def to_dict(self):
         return {

@@ -46,6 +46,20 @@ class PEPTest(unittest.TestCase):
         pep_dict = self.pep.to_dict()
         self.assertIsInstance(pep_dict, dict)
 
+    def test_pep_raw_content(self):
+        """It should return the raw content of the PEP"""
+        self.pep.parse_metadata()
+        with open('pep_documents/pep-0008.txt', 'rb') as f:
+            lines = f.readlines()
+        self.assertIsNotNone(self.pep.pep_content)
+        self.assertEqual(self.pep.pep_content.splitlines()[3],
+                         'This document gives coding conventions for the '
+                         'Python code comprising')
+        self.assertEqual(self.pep.pep_content.splitlines()[622 - 15],
+                         'Overriding Principle')
+        self.assertEqual(self.pep.pep_content, ''.join(lines[14:]))
+        self.assertEqual(len(self.pep.pep_content.splitlines()), 1248 - 14)
+
 
 if __name__ == '__main__':
     unittest.main()

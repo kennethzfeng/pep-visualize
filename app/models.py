@@ -1,10 +1,21 @@
 """Application Models"""
 
+import os
+
 
 class PEP(object):
     LINE_READ_COUNT = 20
     def __init__(self, pep_text):
         self.pep_text = pep_text
+
+    @classmethod
+    def load_pep(cls, pep_number, directory):
+        if not os.path.isdir(directory):
+            raise ValueError('Unexpected directory value: %s' % directory)
+        path = os.path.join(directory, 'pep-%04d.txt' % pep_number)
+        with open(path, 'rb') as f:
+            data = f.read()
+        return PEP(data)
 
     def parse_metadata(self):
         lines = self.pep_text.splitlines()

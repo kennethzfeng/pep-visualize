@@ -41,6 +41,10 @@ class PEPTest(unittest.TestCase):
         self.pep.parse_metadata()
         self.assertEqual('Active', self.pep.status)
 
+    def test_pep_parse_content_type(self):
+        self.pep.parse_metadata()
+        self.assertEqual('text/x-rst', self.pep.content_type)
+
     def test_pep_to_dict(self):
         self.pep.parse_metadata()
         pep_dict = self.pep.to_dict()

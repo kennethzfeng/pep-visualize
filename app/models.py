@@ -29,6 +29,7 @@ class PEP(object):
         self._parse_authors()
         self._parse_type()
         self._parse_status()
+        self._parse_content_type()
 
 
         self.pep_content = '\n\n\n'.join(self.pep_text.split('\n\n\n')[1:])
@@ -55,11 +56,16 @@ class PEP(object):
         if 'Status' in self.metadata_dict:
             self.status = self.metadata_dict['Status']
 
+    def _parse_content_type(self):
+        if 'Content-Type' in self.metadata_dict:
+            self.content_type = self.metadata_dict['Content-Type']
+
     def to_dict(self):
         return {
             'title': self.title,
             'number': self.number,
             'authors': self.authors,
             'type': self.type,
-            'status': self.status
+            'status': self.status,
+            'content_type': self.content_type
         }

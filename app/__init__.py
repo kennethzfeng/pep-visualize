@@ -6,6 +6,8 @@ PEP Visualize
 from flask import Flask, jsonify, abort, make_response
 from app.models import PEP
 import requests
+import os
+import re
 
 
 app = Flask(__name__)
@@ -36,3 +38,24 @@ def get_pep(pep_number):
         return jsonify(dict(data=pep_dict, raw=text))
     else:
         return abort(404)
+
+
+@app.route('/pep')
+def list_of_valid_pep_numbers():
+    """Return a list of valid PEP numbers"""
+    items = os.listdir('pep_documents')
+
+    def is_pep(x):
+        filename, ext = os.path.splitext(x)
+        return 'pep-' in filename and '.txt' == ext.lower()
+
+    peps = [pep for pep in items if is_pep(pep)]
+
+    valid_numbers = []
+    pattern = re.compile('^pep-(\d+)\.txt$')
+    for pep in peps:
+        match_obj = pattern.match(pep)
+        if match_obj:
+            valid_numbers.append(int(match_obj.group(1)))
+
+    return jsonify(dict(data=valid_numbers))

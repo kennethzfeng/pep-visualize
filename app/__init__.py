@@ -1,7 +1,6 @@
 """
 PEP Visualize
-=============
-Web scrapping functions
+============= Web scrapping functions
 
 """
 from flask import Flask, jsonify, abort, make_response
@@ -34,6 +33,6 @@ def get_pep(pep_number):
     pep.parse_metadata()
     pep_dict = pep.to_dict()
     if pep_dict:
-        return jsonify(dict(data=pep_dict))
+        return jsonify(dict(data=pep_dict, raw=text))
     else:
         return abort(404)

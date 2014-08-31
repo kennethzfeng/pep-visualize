@@ -19,11 +19,13 @@ class APITest(unittest.TestCase):
         self.assertIn('data', json_obj)
 
         with open('pep_documents/pep-0008.txt', 'rb') as f:
-            pep = PEP(f.read().decode('utf-8'))
+            raw_content = f.read().decode('utf-8')
+            pep = PEP(raw_content)
         if pep:
             pep.parse_metadata()
             pep_dict = pep.to_dict()
         self.assertDictEqual(json_obj['data'], pep_dict)
+        self.assertEqual(json_obj['raw'], raw_content)
 
     def test_error(self):
         response = self.app.get('/pep/-1')

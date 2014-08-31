@@ -1,1 +1,7 @@
 pep/
+
+# Python Cache
+*.pyc
+
+# IPython Notebook Checkpoint
+.ipynb_checkpoints/

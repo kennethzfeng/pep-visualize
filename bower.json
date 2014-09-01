@@ -17,5 +17,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.14",
+    "d3": "~3.4.11",
+    "bootstrap": "~3.2.0"
+  }
 }

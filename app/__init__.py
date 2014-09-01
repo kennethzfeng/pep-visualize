@@ -3,7 +3,7 @@ PEP Visualize
 ============= Web scrapping functions
 
 """
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, render_template
 from app.models import PEP
 import requests
 import os
@@ -21,6 +21,11 @@ def error_404(e):
 @app.errorhandler(400)
 def error_400(e):
     return jsonify({'errors': ('Bad Request', )}), 400
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/pep/<int:pep_number>')

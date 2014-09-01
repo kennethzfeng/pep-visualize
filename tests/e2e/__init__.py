@@ -19,11 +19,26 @@ class APITest(unittest.TestCase):
         self.assertIn('data', json_obj)
 
         with open('pep_documents/pep-0008.txt', 'rb') as f:
-            pep = PEP(f.read().decode('utf-8'))
+            raw_content = f.read().decode('utf-8')
+            pep = PEP(raw_content)
         if pep:
             pep.parse_metadata()
             pep_dict = pep.to_dict()
         self.assertDictEqual(json_obj['data'], pep_dict)
+        self.assertEqual(json_obj['raw'], raw_content)
+
+    def test_list_of_valid_peps(self):
+        response = self.app.get('/pep')
+        self.assertEqual(200, response.status_code)
+        json_obj = json.loads(response.data, encoding='utf-8')
+        self.assertIn('data', json_obj)
+        self.assertIsInstance(json_obj['data'], list)
+        self.assertIn(8, json_obj['data'])
+
+    def test_error(self):
+        response = self.app.get('/pep/-1')
+        self.assertEqual(404, response.status_code)
+        self.assertEqual('application/json', response.headers['Content-Type'])
 
 
 if __name__ == '__main__':

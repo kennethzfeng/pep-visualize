@@ -9,6 +9,10 @@ class PEPTest(unittest.TestCase):
             data = f.read()
         self.pep = PEP(data)
 
+    def test_load_pep(self):
+        self.assertEqual(self.pep.pep_text,
+                         PEP.load_pep(8, directory='pep_documents').pep_text)
+
     def test_pep_text(self):
         self.assertIsNotNone(self.pep.pep_text)
         lines = self.pep.pep_text.splitlines()

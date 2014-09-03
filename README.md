@@ -16,7 +16,7 @@ Contribution to this project is welcomed.  You could also drop me a line before 
 
 TODO
 ----
-[TODO from Wiki](Home)
+[TODO from Wiki](kennethzfeng/pep-visualize/wiki/TODO)
 
 
 License

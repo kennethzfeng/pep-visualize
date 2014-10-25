@@ -5,3 +5,5 @@ pep/
 
 # IPython Notebook Checkpoint
 .ipynb_checkpoints/
+node_modules/
+app/static/lib/

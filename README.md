@@ -6,7 +6,23 @@ Visualize the relationship between each pair of Python Enhancedment Proposals (a
 
 Installation
 ------------
+
+### Dependencies
 - Please bower to install all javascript libraries. See bower.json
+```bash
+# Frontend Deps
+bower install
+# Python Deps
+pip install -r requirements.txt
+```
+
+Deployment
+----------
+- Heroku
+  - Multi-Buildpacks: Nodejs & Python 
+- Docker Container
+  - see ```kennethzfeng/pep-visualize```
+
 
 
 Contribute

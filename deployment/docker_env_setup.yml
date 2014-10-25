@@ -1,0 +1,4 @@
+- name: Set DOCKER_URL
+  when: ansible_os_family=="Darwin"
+  shell: echo $(boot2docker ip 2> /dev/null)
+  register: docker_host

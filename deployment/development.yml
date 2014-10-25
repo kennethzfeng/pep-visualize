@@ -1,0 +1,17 @@
+- name: Provision Development Docker
+  hosts: localhost
+  connection: local
+  vars:
+    docker_port: 2375
+
+  tasks:
+
+    - include: docker_env_setup.yml
+
+    - name: Run a PEP-Visualize docker
+      docker:
+        image=pep-visualize
+        ports="18000:8000"
+        name=mypep
+        docker_url='tcp://{{ docker_host.stdout }}:{{ docker_port }}'
+        state=running

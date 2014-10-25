@@ -1,4 +1,4 @@
-FROM kennethzfeng/dockerize-python:2.7.8
+FROM kennethzfeng/dockerize-python:2.7.8-onbuild
 
 
 EXPOSE 8000

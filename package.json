@@ -18,10 +18,10 @@
     "url": "https://github.com/kennethzfeng/pep-visualize/issues"
   },
   "dependencies": {
-    "bower": "~1.3.12"
-  },
-  "devDependencies": {
+    "bower": "~1.3.12",
     "grunt": "^0.4.5",
     "grunt-bower-task": "^0.4.0"
+  },
+  "devDependencies": {
   }
 }

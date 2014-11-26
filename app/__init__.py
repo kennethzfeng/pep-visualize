@@ -88,9 +88,9 @@ def list_of_valid_pep_numbers():
 @app.route('/pep/stat')
 def type_stat():
     # Fake Bar Chart Data
-    return jsonify(dict(data={
-        'Process': 3,
-        'Standards Track': 12,
-        'Informational': 20
-        }))
+    return jsonify(dict(data=[
+            {'name': 'Process', 'count': 3},
+            {'name': 'Standards Track', 'count': 12},
+            {'name': 'Informational', 'count': 20},
+        ]))
 

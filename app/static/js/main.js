@@ -12,6 +12,23 @@ require.config({
   }
 });
 
-require(['bootstrap', 'jquery', 'd3'], function() {
+require(['d3', 'bootstrap', 'jquery'], function(d3) {
   console.log('Loaded');
+
+  $(document).ready(function() {
+    var data = d3.json('/pep/stat', function(error, json) {
+
+      console.log(json.data);
+
+      var chart = d3.select('#chart');
+
+      chart.selectAll('div')
+        .data(json.data)
+        .enter().append('div')
+          .style('width', function(d) { return d.count * 10 + 'px'; })
+          .text(function(d) { return d.count; });
+    });
+
+
+  });
 });

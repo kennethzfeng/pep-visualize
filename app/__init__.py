@@ -12,8 +12,6 @@ import re
 
 app = Flask(__name__)
 
-peps = []
-
 
 @app.errorhandler(404)
 def error_404(e):

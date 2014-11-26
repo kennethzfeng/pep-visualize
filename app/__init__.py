@@ -12,6 +12,8 @@ import re
 
 app = Flask(__name__)
 
+peps = []
+
 
 @app.errorhandler(404)
 def error_404(e):
@@ -45,9 +47,8 @@ def get_pep(pep_number):
         return abort(404)
 
 
-@app.route('/pep')
-def list_of_valid_pep_numbers():
-    """Return a list of valid PEP numbers"""
+def all_peps():
+    """Returns a list of valid PEP numbers"""
     items = os.listdir('pep_documents')
 
     def is_pep(x):
@@ -62,5 +63,11 @@ def list_of_valid_pep_numbers():
         match_obj = pattern.match(pep)
         if match_obj:
             valid_numbers.append(int(match_obj.group(1)))
+    return valid_numbers
 
+
+@app.route('/pep')
+def list_of_valid_pep_numbers():
+    """Return a list of valid PEP numbers"""
+    valid_numbers = all_peps()
     return jsonify(dict(data=valid_numbers))

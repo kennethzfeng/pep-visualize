@@ -20,12 +20,21 @@ require(['d3', 'bootstrap', 'jquery'], function(d3) {
 
       console.log(json.data);
 
-      var chart = d3.select('#chart');
+      var width = 800;
+      var chart = d3.select('#chart')
+        .attr('width', width);
+
+      var xScale = d3.scale.linear()
+        .domain([0, d3.max(json.data, function(d) {
+            return d.count;
+          })])
+        .range([0, width]);
+
 
       chart.selectAll('div')
         .data(json.data)
         .enter().append('div')
-          .style('width', function(d) { return d.count * 10 + 'px'; })
+          .style('width', function(d) { return xScale(d.count) + 'px'; })
           .text(function(d) { return d.count; });
     });
 

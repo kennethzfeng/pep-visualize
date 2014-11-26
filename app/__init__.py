@@ -36,6 +36,9 @@ def get_pep(pep_number):
     if not pep_number:
         return abort(400)
 
+    if pep_number not in list(all_peps()):
+        return abort(404)
+
     with open('pep_documents/pep-%04d.txt' % pep_number, 'rb') as f:
         text = f.read().decode('utf-8')
     pep = PEP(text)

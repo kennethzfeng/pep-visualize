@@ -40,6 +40,16 @@ class APITest(unittest.TestCase):
         self.assertEqual(404, response.status_code)
         self.assertEqual('application/json', response.headers['Content-Type'])
 
+    def test_invalid_pep_number_string_request(self):
+        response = self.app.get('/pep/hello')
+        self.assertEqual(404, response.status_code)
+        self.assertEqual('application/json', response.headers['Content-Type'])
+
+    def test_invalid_pep_number_request(self):
+        response = self.app.get('/pep/99')
+        self.assertEqual(404, response.status_code)
+        self.assertEqual('application/json', response.headers['Content-Type'])
+
 
 if __name__ == '__main__':
     unittest.main()

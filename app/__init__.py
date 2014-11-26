@@ -34,6 +34,9 @@ def get_pep(pep_number):
     if not pep_number:
         return abort(400)
 
+    if pep_number not in list(all_peps()):
+        return abort(404)
+
     with open('pep_documents/pep-%04d.txt' % pep_number, 'rb') as f:
         text = f.read().decode('utf-8')
     pep = PEP(text)
@@ -45,9 +48,8 @@ def get_pep(pep_number):
         return abort(404)
 
 
-@app.route('/pep')
-def list_of_valid_pep_numbers():
-    """Return a list of valid PEP numbers"""
+def all_peps():
+    """Returns a generator of valid PEP numbers"""
     items = os.listdir('pep_documents')
 
     def is_pep(x):
@@ -56,11 +58,15 @@ def list_of_valid_pep_numbers():
 
     peps = [pep for pep in items if is_pep(pep)]
 
-    valid_numbers = []
     pattern = re.compile('^pep-(\d+)\.txt$')
     for pep in peps:
         match_obj = pattern.match(pep)
         if match_obj:
-            valid_numbers.append(int(match_obj.group(1)))
+            yield int(match_obj.group(1))
 
+
+@app.route('/pep')
+def list_of_valid_pep_numbers():
+    """Return a list of valid PEP numbers"""
+    valid_numbers = list(all_peps())
     return jsonify(dict(data=valid_numbers))

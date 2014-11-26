@@ -48,18 +48,31 @@ def get_pep(pep_number):
         return abort(404)
 
 
-def all_peps():
-    """Returns a generator of valid PEP numbers"""
+def gen_pep_filenames():
+    """Generate PEP filenames"""
     items = os.listdir('pep_documents')
 
     def is_pep(x):
         filename, ext = os.path.splitext(x)
         return 'pep-' in filename and '.txt' == ext.lower()
 
-    peps = [pep for pep in items if is_pep(pep)]
+    for pep in items:
+        if is_pep(pep):
+            yield pep
 
+
+def gen_peps():
+    """Generate PEP objects"""
+    for pep_filename in gen_pep_filenames():
+        with open('pep_documents/%s' % pep_filename, 'rb') as f:
+            text = f.read().decode('utf-8')
+        yield PEP(text)
+
+
+def all_peps():
+    """Returns a generator of valid PEP numbers"""
     pattern = re.compile('^pep-(\d+)\.txt$')
-    for pep in peps:
+    for pep in gen_pep_filenames():
         match_obj = pattern.match(pep)
         if match_obj:
             yield int(match_obj.group(1))
@@ -70,3 +83,14 @@ def list_of_valid_pep_numbers():
     """Return a list of valid PEP numbers"""
     valid_numbers = list(all_peps())
     return jsonify(dict(data=valid_numbers))
+
+
+@app.route('/pep/stat')
+def type_stat():
+    # Fake Bar Chart Data
+    return jsonify(dict(data={
+        'Process': 3,
+        'Standards Track': 12,
+        'Informational': 20
+        }))
+

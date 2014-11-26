@@ -48,7 +48,7 @@ def get_pep(pep_number):
 
 
 def all_peps():
-    """Returns a list of valid PEP numbers"""
+    """Returns a generator of valid PEP numbers"""
     items = os.listdir('pep_documents')
 
     def is_pep(x):
@@ -57,17 +57,15 @@ def all_peps():
 
     peps = [pep for pep in items if is_pep(pep)]
 
-    valid_numbers = []
     pattern = re.compile('^pep-(\d+)\.txt$')
     for pep in peps:
         match_obj = pattern.match(pep)
         if match_obj:
-            valid_numbers.append(int(match_obj.group(1)))
-    return valid_numbers
+            yield int(match_obj.group(1))
 
 
 @app.route('/pep')
 def list_of_valid_pep_numbers():
     """Return a list of valid PEP numbers"""
-    valid_numbers = all_peps()
+    valid_numbers = list(all_peps())
     return jsonify(dict(data=valid_numbers))

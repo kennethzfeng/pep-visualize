@@ -11,7 +11,7 @@ class AppTest(unittest.TestCase):
         self.assertEqual('Hello', self.test)
 
     def test_all_peps(self):
-        valid_numbers = all_peps()
+        valid_numbers = list(all_peps())
         self.assertIn(8, valid_numbers)
         self.assertNotIn(99, valid_numbers)
 
